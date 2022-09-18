@@ -13,24 +13,28 @@ import java.sql.Timestamp;
 public class Cart {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name ="id")
+    @Column(name ="Cart_ID")
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "Product_id")
+    @JoinColumn(name = "Product_ID")
     private Product productId;
 
     @ManyToOne
-    @JoinColumn(name = "User_id")
-    private User UserId;
+    @JoinColumn(name = "user_ID")
+    private User userId;
 
     @CreationTimestamp
     private Timestamp createTime;
 
+    // set builder 패턴으로 수정
+    @Setter
+    private long carttotal;
     @Builder
-    public Cart(Product productId, User userId, Timestamp createTime) {
+    public Cart(Product productId, User userId, Timestamp createTime, long carttotal) {
         this.productId = productId;
-        UserId = userId;
+        this.userId = userId;
         this.createTime = createTime;
+        this.carttotal = carttotal;
     }
 }
