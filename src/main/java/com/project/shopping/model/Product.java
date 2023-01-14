@@ -49,7 +49,15 @@ public class Product {
 
     @Setter
     @CreationTimestamp
+    @Column(nullable = false)
     private Timestamp createDate;
+
+
+    @Setter
+    @CreationTimestamp
+    @Column(nullable = false)
+    private Timestamp modifiedDate;
+
 
 
     @OneToMany(mappedBy = "productId")
@@ -59,8 +67,14 @@ public class Product {
     @OneToMany(mappedBy = "productId")
     private  List<Cart> carts = new ArrayList<>();
 
+
+    @Setter
+    @Column(nullable = false)
+    private  String status;
+
+
     @Builder
-    public Product(User userId, String title, String content, String name, long price, int total, String imgUrl, Timestamp createDate) {
+    public Product(User userId, String title, String content, String name, long price, int total, String imgUrl, Timestamp createDate,Timestamp modifiedDate, String status) {
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -69,5 +83,7 @@ public class Product {
         this.total = total;
         this.imgUrl = imgUrl;
         this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
+        this.status = status;
     }
 }

@@ -43,6 +43,7 @@ public class PrincipalDetails implements UserDetails , OAuth2User {
     }
     @Override
     public String getPassword() {
+        System.out.println(user.getPassword());
         return user.getPassword();
     }
 

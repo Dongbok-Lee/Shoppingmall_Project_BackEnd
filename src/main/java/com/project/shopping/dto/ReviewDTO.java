@@ -33,10 +33,12 @@ public class ReviewDTO {
     private  String content;
 
     private LocalDate reviewCreateTime;
+    private  LocalDate modifiedDate;
+
 
 
     @Builder
-    public ReviewDTO(String userId, String userEmail, String userName, int userAge, String userNickName, String productName, int productId, long productPrice, String imgUrl, String title, String content, int reviewId, LocalDate reviewCreateTime) {
+    public ReviewDTO(String userId, String userEmail, String userName, int userAge, String userNickName, String productName, int productId, long productPrice, String imgUrl, String title, String content, int reviewId, LocalDate reviewCreateTime, LocalDate modifiedDate) {
         this.reviewId = reviewId;
         this.userId = userId;
         this.userEmail = userEmail;
@@ -50,5 +52,6 @@ public class ReviewDTO {
         this.title = title;
         this.content = content;
         this.reviewCreateTime = reviewCreateTime;
+        this.modifiedDate = modifiedDate;
     }
 }

@@ -2,9 +2,17 @@ package com.project.shopping.model;
 
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.sql.Array;
 import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @AllArgsConstructor
@@ -12,38 +20,59 @@ import java.sql.Timestamp;
 @Getter
 @Table(name = "`order`")
 public class Order {
+
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    @Column(name ="orderID")
+    private String id;
 
-    @ManyToOne
+    private static int count = 0;
 
-    @JoinColumn(name = "Product_Id")
-    private Product productId;
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private List<OrderDetail> products = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "User_ID")
-    private User userId;
+    private User user;
 
-    @Column(nullable = false)
-    private int productNum;
+    @Setter
+    @Column(nullable = true, length=1000)
+    private String orderComplete;
 
-    @Column(nullable = false)
-    private boolean orderComplete;
-
+    @Setter
     @Column(nullable = true)
     private long amount;
 
-    @CreationTimestamp
-    private Timestamp orderTime;
+    @CreatedDate
+    private LocalDateTime orderTime;
+
+    @Setter
+    @Column
+    private LocalDateTime  paymentCompleteDate;
+
+    @Column(nullable = false)
+    private String status;
+
+    @PrePersist
+    public void createdAt() {
+        this.orderTime = LocalDateTime.now();
+    }
 
     @Builder
-    public Order(Product productId, User userId, int productNum, boolean orderComplete, long amount, Timestamp orderTime) {
-        this.productId = productId;
-        this.userId = userId;
-        this.productNum = productNum;
+    public Order(ArrayList<OrderDetail> products, User user, String orderComplete, long amount, LocalDateTime paymentCompleteDate, String status) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
+        this.id = "oid" + dtf.format(LocalDateTime.now()) + count++;
+        this.products = products;
+        this.user = user;
         this.orderComplete = orderComplete;
         this.amount = amount;
-        this.orderTime = orderTime;
+        this.paymentCompleteDate = paymentCompleteDate;
+        this.status = status;
     }
+
+    public void addProduct(OrderDetail orderDetail){
+        products.add(orderDetail);
+        orderDetail.setOrder(this);
+    }
+
 }

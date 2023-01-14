@@ -2,6 +2,8 @@ package com.project.shopping.auth;
 
 
 
+import com.project.shopping.Error.CustomException;
+import com.project.shopping.Error.ErrorCode;
 import com.project.shopping.model.User;
 import com.project.shopping.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +20,10 @@ public class PrinciplaDetailsService implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
         System.out.println("PrincipalDetailsService");
-        User user = userRepository.findByEmail(email); //이메일을 이용하여 user객체 인증 객체  만들기
-        System.out.println(user);
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()->new CustomException("User Not Found", ErrorCode.NotFoundUserException));
+
+        System.out.println(user); //user  찍히고
         return  new PrincipalDetails(user);
     }
 }

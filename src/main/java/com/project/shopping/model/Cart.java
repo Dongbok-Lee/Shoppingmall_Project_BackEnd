@@ -29,12 +29,18 @@ public class Cart {
 
     // set builder 패턴으로 수정
     @Setter
-    private long carttotal;
+    private long  productNum; // 상품 개수
+
+    @Setter
+    @Column(nullable = false)
+    private  String status;
+
     @Builder
-    public Cart(Product productId, User userId, Timestamp createTime, long carttotal) {
+    public Cart(Product productId, User userId, Timestamp createTime, long productNum, String status) {
         this.productId = productId;
         this.userId = userId;
         this.createTime = createTime;
-        this.carttotal = carttotal;
+        this.productNum = productNum;
+        this.status = status;
     }
 }

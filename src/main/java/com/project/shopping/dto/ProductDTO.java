@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Time;
 import java.sql.Timestamp;
 
 @NoArgsConstructor
@@ -18,14 +19,15 @@ public class ProductDTO {
     private String title;
     private  String content;
     private  String name;
-    private  long price;
+    private  long amount;
     private  int total;
     private String imgUrl;
     private Timestamp createDate;
+    private Timestamp modifiedDate;
 
 
     @Builder
-    public ProductDTO(int productId, String useremail, String userId, String userPhoneNumber, String userName, String title, String content, String name, long price, int total, String imgUrl, Timestamp createDate) {
+    public ProductDTO(int productId, String useremail, String userId, String userPhoneNumber, String userName, String title, String content, String name, long amount, int total, String imgUrl, Timestamp createDate, Timestamp modifiedDate) {
         this.productId = productId;
         this.userEmail = useremail;
         this.userId = userId;
@@ -34,9 +36,10 @@ public class ProductDTO {
         this.title = title;
         this.content = content;
         this.name = name;
-        this.price = price;
+        this.amount = amount;
         this.total = total;
         this.imgUrl = imgUrl;
         this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
     }
 }

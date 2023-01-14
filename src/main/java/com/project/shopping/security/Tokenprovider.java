@@ -1,11 +1,16 @@
 package com.project.shopping.security;
 
 
+import com.project.shopping.Error.ErrorCode;
+import com.project.shopping.Error.ErrorResponse;
 import com.project.shopping.model.User;
 import io.jsonwebtoken.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
@@ -86,6 +91,7 @@ public class Tokenprovider {
     }
 
 
+
         // 토큰이 있는지 검사하고 이메일 추출하는 api
     public String validateAndGetUserEmail(String token){
         Claims claims = Jwts.parser()
@@ -94,4 +100,8 @@ public class Tokenprovider {
                 .getBody();
         return claims.getSubject();
     }
+
+    // refresh 새로 생성 , 검증 로직  , 여기 자체서 에러 5000
+
+
 }

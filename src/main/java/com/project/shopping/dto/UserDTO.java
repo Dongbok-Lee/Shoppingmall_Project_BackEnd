@@ -6,6 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.sql.Timestamp;
+
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
@@ -18,9 +21,13 @@ public class UserDTO {
     private int age;
     private  String nickname;
     private  String phoneNumber;
-    private  String token;
+    private Timestamp createDate;
+    private  Timestamp modifiedDate;
+    private  String status;
+
+
     @Builder
-    public UserDTO(String email , String username, String address, String postCode, int age, String nickname, String phoneNumber, String token){
+    public UserDTO(String email , String username, String address, String postCode, int age, String nickname, String phoneNumber, Timestamp createDate, Timestamp modifiedDate, String status){
         this.email = email;
         this.username =username;
         this.address = address;
@@ -28,6 +35,9 @@ public class UserDTO {
         this.age = age;
         this.nickname = nickname;
         this.phoneNumber= phoneNumber;
-        this.token = token;
+        this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
+        this.status = status;
+
     }
 }
