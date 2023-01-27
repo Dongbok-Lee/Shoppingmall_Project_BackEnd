@@ -5,32 +5,25 @@ import com.project.shopping.Error.CustomException;
 import com.project.shopping.Error.ErrorCode;
 import com.project.shopping.auth.PrincipalDetails;
 
-import com.project.shopping.dto.ResponseDTO;
 import com.project.shopping.dto.UserDTO;
 import com.project.shopping.dto.requestDTO.UserRequestDTO.*;
 
 import com.project.shopping.dto.responseDTO.UserResponseDTO.*;
-import com.project.shopping.model.User;
 import com.project.shopping.service.UserService;
 
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 
 import org.springframework.security.core.Authentication;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 
 @RestController
@@ -71,12 +64,12 @@ public class UserController  {
     }
 
     @PostMapping("/api/Oauth/join")
-    public ResponseEntity<?> oauthsignup(@RequestBody UserDTO userDTO,Authentication authentication) {
+    public ResponseEntity<?> oauthSignup(@RequestBody UserDTO userDTO,Authentication authentication) {
         PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
         String email = userDetails.getUser().getEmail();
         System.out.println(email);
 
-        UserDTO response = userService.SaveUser(userDTO, authentication);
+        UserDTO response = userService.saveUser(userDTO, authentication);
 
 
         return ResponseEntity.ok().body(response);
@@ -134,7 +127,7 @@ public class UserController  {
     }
 
     @PutMapping("/api/user/update")
-    public ResponseEntity<?> userupdate(Authentication authentication, @RequestBody @Valid UserUpdateRequestDTO userUpdateRequestDTO){
+    public ResponseEntity<?> userUpdate(Authentication authentication, @RequestBody @Valid UserUpdateRequestDTO userUpdateRequestDTO){
         if(authentication == null){
             throw  new CustomException("허용되지 않은 접근입니다",ErrorCode.UnauthorizedException);
         }
@@ -149,7 +142,7 @@ public class UserController  {
 
 
     @GetMapping("/api/join/email-check/{value}")
-    public ResponseEntity<?> checkemail(@PathVariable(value = "value") String value) throws Exception {
+    public ResponseEntity<?> checkEmail(@PathVariable(value = "value") String value) throws Exception {
         userService.existsByEmail(value);
         UserCheckEmailResponseDTO userCheckEmailResponseDTO = UserCheckEmailResponseDTO.builder().email(value).build();
 
@@ -164,7 +157,7 @@ public class UserController  {
     }
 
     @GetMapping("/api/join/nickname-check/{value}")
-    public ResponseEntity<?> checknickname(@PathVariable(value = "value") String value){
+    public ResponseEntity<?> checkNickname(@PathVariable(value = "value") String value){
         userService.existsByNickname(value);
         UserCheckNicknameResponseDTO userCheckNicknameResponseDTO = UserCheckNicknameResponseDTO.builder().nickname(value).build();
         Map<String, Object> response = new HashMap<>();

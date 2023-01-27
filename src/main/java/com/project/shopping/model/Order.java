@@ -1,25 +1,19 @@
 package com.project.shopping.model;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
-import java.sql.Array;
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Table(name = "`order`")
-public class Order {
+public class Order extends BaseTimeEntity{
 
     @Id
     @Column(name ="orderID")
@@ -51,11 +45,6 @@ public class Order {
 
     @Column(nullable = false)
     private String status;
-
-    @PrePersist
-    public void createdAt() {
-        this.orderTime = LocalDateTime.now();
-    }
 
     @Builder
     public Order(ArrayList<OrderDetail> products, User user, String orderComplete, long amount, LocalDateTime paymentCompleteDate, String status) {

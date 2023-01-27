@@ -54,8 +54,6 @@ public class ReviewService {
                 .title(reviewCreateRequestDTO.getTitle())
                 .content(reviewCreateRequestDTO.getContent())
                 .imageUrl(reviewCreateRequestDTO.getImgUrl())
-                .reviewcreateTime(LocalDate.now())
-                .modifieddate(LocalDate.now())
                 .status("active")
                 .build();
 
@@ -83,9 +81,6 @@ public class ReviewService {
         findReview.setContent(reviewUpdateRequestDTO.getContent());
         findReview.setTitle(reviewUpdateRequestDTO.getTitle());
         findReview.setImageUrl(reviewUpdateRequestDTO.getImgUrl());
-
-
-        findReview.setModifieddate(LocalDate.now());
 
         // 수정하기
         if(findReview.getProductId().getStatus().equals("Disabled")){
@@ -156,8 +151,8 @@ public class ReviewService {
                     .reviewId(review.getId())
                     .content(review.getContent())
                     .title(review.getTitle())
-                    .createTime(review.getCreateTime())
-                    .modifiedTime(review.getModifieddate())
+                    .createDate(review.getCreateDate())
+                    .modifiedDate(review.getModifiedDate())
                     .imgUrl(review.getImageUrl())
                     .build();
             userReviewListDto.add(reviewUserJoinResponseDTO);
@@ -175,12 +170,12 @@ public class ReviewService {
         for(Review review : ProductReviewList){
             ReviewProductJoinResponseDTO reviewProductJoinResponseDTO = ReviewProductJoinResponseDTO.builder()
                     .reviewId(review.getId())
-                    .userNicename(review.getUserId().getNickname())
+                    .userNickname(review.getUserId().getNickname())
                     .imgURL(review.getImageUrl())
                     .title(review.getTitle())
                     .content(review.getContent())
-                    .createTime(review.getCreateTime())
-                    .modifiedTime(review.getModifieddate())
+                    .createDate(review.getCreateDate())
+                    .modifiedDate(review.getModifiedDate())
                     .build();
             ProductReviewDto.add(reviewProductJoinResponseDTO);
         }

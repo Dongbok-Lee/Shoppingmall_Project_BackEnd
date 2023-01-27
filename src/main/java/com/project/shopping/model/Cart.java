@@ -1,16 +1,13 @@
 package com.project.shopping.model;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Cart {
+public class Cart extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="Cart_ID")
@@ -24,9 +21,6 @@ public class Cart {
     @JoinColumn(name = "user_ID")
     private User userId;
 
-    @CreationTimestamp
-    private Timestamp createTime;
-
     // set builder 패턴으로 수정
     @Setter
     private long  productNum; // 상품 개수
@@ -36,10 +30,9 @@ public class Cart {
     private  String status;
 
     @Builder
-    public Cart(Product productId, User userId, Timestamp createTime, long productNum, String status) {
+    public Cart(Product productId, User userId, long productNum, String status) {
         this.productId = productId;
         this.userId = userId;
-        this.createTime = createTime;
         this.productNum = productNum;
         this.status = status;
     }

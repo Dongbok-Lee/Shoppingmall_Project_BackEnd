@@ -4,7 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Getter
 @NoArgsConstructor
@@ -16,12 +16,12 @@ public class ProductSearchResponseDTO {
     private  long price;
     private  int total;
     private String imgUrl;
-    private Timestamp createDate;
-    private Timestamp modifiedDate;
+    private LocalDateTime createDate;
+    private LocalDateTime modifiedDate;
 
     @Builder
 
-    public ProductSearchResponseDTO(int productId, String title, String content, String name, long price, int total, String imgUrl, Timestamp createDate, Timestamp modifiedDate) {
+    public ProductSearchResponseDTO(int productId, String title, String content, String name, long price, int total, String imgUrl, LocalDateTime createDate, LocalDateTime modifiedDate) {
         this.productId = productId;
         this.title = title;
         this.content = content;

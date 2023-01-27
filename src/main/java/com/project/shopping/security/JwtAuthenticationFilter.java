@@ -24,6 +24,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ThreadPoolExecutor;
 
 
 @RequiredArgsConstructor
@@ -35,16 +36,13 @@ public class JwtAuthenticationFilter extends JsonIdPwAuthenticationFilter{
 
 
     @Override
-    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authResult) throws IOException, ServletException {
+    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain, Authentication authentication) throws IOException, ServletException {
         try{
-            System.out.println("인증완료");
-            PrincipalDetails principalDetails = (PrincipalDetails) authResult.getPrincipal();
-            User user = principalDetails.getUser();
-            String jwt = tokenprovider.create(user);
-            System.out.println(jwt);
+            Token token = tokenprovider.generateToken(authentication); // 토큰 생성
+            String accessToken = token.getAccessToken(); // access token
             response.setContentType("application/json");
 
-            response.addHeader("Authorization","Bearer "+jwt);
+            response.addHeader("Authorization","Bearer "+accessToken); // header에 accesstoken 추가
 
 
 //            UserDTO res = UserDTO.builder().username(user.getUsername()).email(user.getEmail())

@@ -18,4 +18,5 @@ public class ReviewCreateResponseDTO {
         this.title = title;
         this.content = content;
     }
+
 }

@@ -1,18 +1,15 @@
 package com.project.shopping.model;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Product {
+public class Product extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="Product_ID")
@@ -47,18 +44,6 @@ public class Product {
     @Column(nullable = false)
     private String imgUrl;
 
-    @Setter
-    @CreationTimestamp
-    @Column(nullable = false)
-    private Timestamp createDate;
-
-
-    @Setter
-    @CreationTimestamp
-    @Column(nullable = false)
-    private Timestamp modifiedDate;
-
-
 
     @OneToMany(mappedBy = "productId")
     private List<Review> reviews = new ArrayList<>(); // 일대 다 review와 연관 관계 맺기
@@ -74,7 +59,7 @@ public class Product {
 
 
     @Builder
-    public Product(User userId, String title, String content, String name, long price, int total, String imgUrl, Timestamp createDate,Timestamp modifiedDate, String status) {
+    public Product(User userId, String title, String content, String name, long price, int total, String imgUrl, String status) {
         this.userId = userId;
         this.title = title;
         this.content = content;
@@ -82,8 +67,6 @@ public class Product {
         this.price = price;
         this.total = total;
         this.imgUrl = imgUrl;
-        this.createDate = createDate;
-        this.modifiedDate = modifiedDate;
         this.status = status;
     }
 }

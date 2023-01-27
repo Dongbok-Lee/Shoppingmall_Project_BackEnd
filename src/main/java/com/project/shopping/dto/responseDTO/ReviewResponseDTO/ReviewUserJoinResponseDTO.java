@@ -4,9 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -16,18 +14,18 @@ public class ReviewUserJoinResponseDTO {
 
     private  String content;
 
-    private LocalDate createTime;
-    private LocalDate modifiedTime;
+    private LocalDateTime createDate;
+    private LocalDateTime modifiedDate;
     private  String ImgUrl;
 
     @Builder
 
-    public ReviewUserJoinResponseDTO(int reviewId, String title, String content, LocalDate createTime, LocalDate modifiedTime, String imgUrl) {
+    public ReviewUserJoinResponseDTO(int reviewId, String title, String content, LocalDateTime createDate, LocalDateTime modifiedDate, String imgUrl) {
         this.reviewId = reviewId;
         this.title = title;
         this.content = content;
-        this.createTime = createTime;
-        this.modifiedTime = modifiedTime;
+        this.createDate = createDate;
+        this.modifiedDate = modifiedDate;
         this.ImgUrl = imgUrl;
     }
 }

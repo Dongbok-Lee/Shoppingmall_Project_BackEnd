@@ -1,20 +1,13 @@
 package com.project.shopping.model;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import java.sql.Time;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.util.Date;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class Review {
+public class Review extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name ="Review_ID")
@@ -43,14 +36,6 @@ public class Review {
     private String imageUrl;
 
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private LocalDate createTime;
-
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Setter
-    private LocalDate modifieddate;
-
-
     @Column(nullable = false)
     @Setter
     private  String status;
@@ -58,14 +43,12 @@ public class Review {
 
 
     @Builder
-    public Review(User userId, Product productId, String title, String content, String imageUrl, LocalDate reviewcreateTime, LocalDate modifieddate, String status) {
+    public Review(User userId, Product productId, String title, String content, String imageUrl, String status) {
         this.userId = userId;
         this.productId = productId;
         this.title = title;
         this.content = content;
         this.imageUrl = imageUrl;
-        this.createTime = reviewcreateTime;
-        this.modifieddate = modifieddate;
         this.status = status;
     }
 }

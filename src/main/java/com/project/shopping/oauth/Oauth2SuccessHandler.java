@@ -53,9 +53,10 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
         User user = userRequstMapper.user(oAuth2User); // 이메일만 담아서 생성
 
 
-        String jwttoken = tokenprovider.create(user);
-        System.out.println(jwttoken);
-        response.addHeader("Authorization","Bearer "+jwttoken); //토큰을 생성 하고
+        Token token = tokenprovider.generateToken(authentication);
+
+        String accessToken = token.getAccessToken();
+        response.addHeader("Authorization","Bearer "+accessToken); //토큰을 생성 하고
         String email = (String) oAuth2User.getAttributes().get("email");
         String name = (String) oAuth2User.getAttributes().get("name");
         System.out.println(email);
@@ -81,11 +82,11 @@ public class Oauth2SuccessHandler implements AuthenticationSuccessHandler {
                     .nickname("????").phoneNumber("????").build();
             userRepository.save(users);
 
-            String targetUrl = makeRediretjoinUrl(jwttoken);
+            String targetUrl = makeRediretjoinUrl(accessToken);
             response.sendRedirect(targetUrl);
 
         }else{
-            String targetUrl = makeRedirectUrl(jwttoken);
+            String targetUrl = makeRedirectUrl(accessToken);
             response.sendRedirect(targetUrl);
         }
 

@@ -5,7 +5,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter
@@ -17,13 +17,13 @@ public class UserJoinResponseDTO {
     private int age;
     private  String nickname;
     private  String phoneNumber;
-    private Timestamp createDate;
-    private  Timestamp modifiedDate;
+    private LocalDateTime createDate;
+    private  LocalDateTime modifiedDate;
 
 
     @Builder
 
-    public UserJoinResponseDTO(String email, String username, String address, String postCode, int age, String nickname, String phoneNumber, Timestamp createDate, Timestamp modifiedDate) {
+    public UserJoinResponseDTO(String email, String username, String address, String postCode, int age, String nickname, String phoneNumber, LocalDateTime createDate, LocalDateTime modifiedDate) {
         this.email = email;
         this.username = username;
         this.address = address;

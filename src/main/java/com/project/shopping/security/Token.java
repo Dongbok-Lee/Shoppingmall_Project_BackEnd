@@ -1,6 +1,7 @@
 package com.project.shopping.security;
 
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -13,17 +14,15 @@ import javax.persistence.Id;
 @ToString
 @NoArgsConstructor
 @Getter
-@Entity
 public class Token {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private  int id;
 
-    private String token;
+
+    private String accessToken;
     private  String refreshToken;
 
-    public Token(String token, String refreshToken) {
-        this.token = token;
+    @Builder
+    public Token(String accessToken, String refreshToken) {
+        this.accessToken = accessToken;
         this.refreshToken = refreshToken;
     }
 }

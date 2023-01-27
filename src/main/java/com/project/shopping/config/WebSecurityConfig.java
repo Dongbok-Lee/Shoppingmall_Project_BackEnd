@@ -4,6 +4,7 @@ import com.project.shopping.oauth.CustomOAuth2Provider;
 import com.project.shopping.oauth.CustomOAuth2UserService;
 import com.project.shopping.oauth.Oauth2SuccessHandler;
 import com.project.shopping.repository.UserRepository;
+import com.project.shopping.security.CustomAuthenticationEntryPoint;
 import com.project.shopping.security.JwtAuthenticationFilter;
 import com.project.shopping.security.JwtAuthorizationFilter;
 import com.project.shopping.security.Tokenprovider;
@@ -68,12 +69,19 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .authorizeRequests()
                 .requestMatchers(CorsUtils::isPreFlightRequest).permitAll()// preFlight 허횽
-                .antMatchers("/shopping/**").authenticated()
-                .antMatchers("/api/**").permitAll()
-                .antMatchers("/api/**","/login/**").permitAll()
-                .anyRequest().permitAll();
+                .antMatchers("/api/join").permitAll()
+                .antMatchers("/api/login").permitAll()
+                .antMatchers("/api/join/email-check/*").permitAll()
+                .antMatchers("/api/join/nickname-check/*").permitAll()
+                .antMatchers("/api/products").permitAll()
+                .antMatchers("/api/products").permitAll()
+                .anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
+        http.addFilterBefore(new JwtAuthorizationFilter(tokenprovider, userRepository), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(),tokenprovider), UsernamePasswordAuthenticationFilter.class);
-        http.addFilter(new JwtAuthorizationFilter(authenticationManager(),tokenprovider,userRepository));
+
         http.cors();
         http.oauth2Login()
                 .authorizationEndpoint()

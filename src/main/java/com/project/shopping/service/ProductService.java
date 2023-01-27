@@ -15,19 +15,11 @@ import com.project.shopping.model.User;
 import com.project.shopping.repository.ProductRepository;
 import com.project.shopping.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
-import java.io.IOException;
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -54,11 +46,9 @@ public class ProductService {
                 .total(productCreateRequestDTO.getTotal())
                 .status("active")
                 .imgUrl(productCreateRequestDTO.getImgUrl())
-                .createDate(Timestamp.valueOf(LocalDateTime.now()))
-                .modifiedDate(Timestamp.valueOf(LocalDateTime.now()))
                 .build(); // 상품 생성
 
-        productRepository.save(product);
+        product = productRepository.save(product);
         ProductCreateResponseDTO productCreateResponseDTO = ProductCreateResponseDTO.builder()
                 .title(product.getTitle())
                 .content(product.getContent())
@@ -152,26 +142,23 @@ public class ProductService {
         product.setTotal(productUpdateRequestDTO.getTotal());
         product.setImgUrl(productUpdateRequestDTO.getImgUrl());
 
-        product.setModifiedDate(Timestamp.valueOf(LocalDateTime.now()));
-
-
         return productRepository.save(product);
 
     }
     public ProductJoinResponseDTO findById(int id){
-        Product findproduct = productRepository.findById(id)
+        Product findProduct = productRepository.findById(id)
                 .orElseThrow(()-> new CustomException("Product Not Found", ErrorCode.NotFoundProductException));
         // dto
         ProductJoinResponseDTO productJoinResponseDTO = ProductJoinResponseDTO.builder()
-                .productId(findproduct.getId())
-                .title(findproduct.getTitle())
-                .content(findproduct.getContent())
-                .name(findproduct.getName())
-                .price(findproduct.getPrice())
-                .total(findproduct.getTotal())
-                .imgUrl(findproduct.getImgUrl())
-                .createDate(findproduct.getCreateDate())
-                .modifiedDate(findproduct.getModifiedDate())
+                .productId(findProduct.getId())
+                .title(findProduct.getTitle())
+                .content(findProduct.getContent())
+                .name(findProduct.getName())
+                .price(findProduct.getPrice())
+                .total(findProduct.getTotal())
+                .imgUrl(findProduct.getImgUrl())
+                .createDate(findProduct.getCreateDate())
+                .modifiedDate(findProduct.getModifiedDate())
                 .build();
         return  productJoinResponseDTO;
 
@@ -285,12 +272,12 @@ public class ProductService {
                 .orElseThrow(()-> new CustomException("User Not Fount", ErrorCode.NotFoundUserException));// 해당 유저 찾기
 
 
-        List<Product> findallproduct = productRepository.getEqUserAndActive(user, status);
+        List<Product> findAllProduct = productRepository.getEqUserAndActive(user, status);
 
         // dto 등록
         List<ProductJoinResponseDTO> response = new ArrayList<>();
 
-        for(Product product: findallproduct){
+        for(Product product: findAllProduct){
             ProductJoinResponseDTO productJoinResponseDTO = ProductJoinResponseDTO.builder()
                     .productId(product.getId())
                     .title(product.getTitle())

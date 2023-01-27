@@ -5,10 +5,9 @@ import lombok.*;
 import javax.persistence.*;
 
 @Entity
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
-public class OrderDetail {
+public class OrderDetail extends BaseTimeEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

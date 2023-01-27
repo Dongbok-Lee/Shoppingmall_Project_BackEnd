@@ -14,6 +14,9 @@ public enum ErrorCode {
     BadEmailException(400,"BadEmailException","잘못된 형식의 이메일 입니다"),
     BadPhoneNumberException(400,"BadPhoneNumberException","잘못된 형식의 번호입니다"),
     UnauthorizedException(401,"UnauthorizedException","허용되지 않는 접근입니다."),
+
+    ExpirationException(401,"ExpirationException","만료된 토큰입니다."),
+
     NotFoundUserException(404,"NotFoundException","계정이 존재하지 않습니다"),
     NotFoundProductException(404,"NotFoundException","상품이 존재하지 않습니다"),
     NotFoundCartException(404,"NotFoundException","해당 장바구니가 존재하지 않습니다"),

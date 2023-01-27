@@ -16,15 +16,9 @@ import com.project.shopping.model.User;
 import com.project.shopping.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.NoSuchElementException;
 
 @Service
 @Slf4j
@@ -53,12 +47,10 @@ public class UserService {
                 .roles("ROLE_USER")
                 .nickname(userJoinRequestDTO.getNickname()).phoneNumber(userJoinRequestDTO.getPhoneNumber())
                 .status("active")
-                .createDate(Timestamp.valueOf(LocalDateTime.now()))
-                .modifieddate(Timestamp.valueOf(LocalDateTime.now()))
                 .postCode(userJoinRequestDTO.getPostCode()).build();
 
 
-        userRepository.save(user);
+        user = userRepository.save(user);
         UserJoinResponseDTO userJoinResponseDTO = UserJoinResponseDTO.builder()
                 .email(user.getEmail())
                 .username(user.getUsername())
@@ -68,14 +60,14 @@ public class UserService {
                 .nickname(user.getNickname())
                 .phoneNumber(user.getPhoneNumber())
                 .createDate(user.getCreateDate())
-                .modifiedDate(user.getModifieddate())
+                .modifiedDate(user.getModifiedDate())
                 .build();
 
 
         return userJoinResponseDTO;
     }
 
-    public UserDTO SaveUser(UserDTO userDTO, Authentication authentication){
+    public UserDTO saveUser(UserDTO userDTO, Authentication authentication){
 
 
         PrincipalDetails userDetails = (PrincipalDetails) authentication.getPrincipal();
@@ -112,7 +104,7 @@ public class UserService {
                 .phoneNumber(user.getPhoneNumber())
                 .postCode(user.getPostCode())
                 .createDate(user.getCreateDate())
-                .modifiedDate(user.getModifieddate())
+                .modifiedDate(user.getModifiedDate())
                 .build();
 
 
@@ -192,8 +184,6 @@ public class UserService {
         user.setAddress(userUpdateRequestDTO.getAddress());
         user.setAge(userUpdateRequestDTO.getAge());
         user.setPostCode(userUpdateRequestDTO.getPostCode());
-
-        user.setModifieddate(Timestamp.valueOf(LocalDateTime.now()));
         userRepository.save(user);
 
         UserUpdateResponseDTO userUpdateResponseDTO = UserUpdateResponseDTO.builder()
@@ -205,7 +195,7 @@ public class UserService {
                 .phoneNumber(user.getPhoneNumber())
                 .postCode(user.getPostCode())
                 .createDate(user.getCreateDate())
-                .modifiedDate(user.getModifieddate())
+                .modifiedDate(user.getModifiedDate())
                 .build();
 
 

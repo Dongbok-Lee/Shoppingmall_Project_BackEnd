@@ -1,20 +1,17 @@
 package com.project.shopping.model;
 
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 @Entity
 @NoArgsConstructor
-@AllArgsConstructor
 @Getter
-public class User {
+public class User extends BaseTimeEntity {
 
     @Id
     @GeneratedValue(generator = "system-uuid")
@@ -55,21 +52,14 @@ public class User {
     @Column(nullable = false)
     private String postCode;
 
-
     private String roles;
-    @CreationTimestamp
-    @Column(nullable = false)
-    private Timestamp createDate;
-
-
-    @Column(nullable = false)
-    @CreationTimestamp
-    @Setter
-    private Timestamp modifieddate;
-
     @Column(nullable = false)
     @Setter
     private  String status;
+
+    @Setter
+    @Column(nullable = false)
+    private boolean passwordEnable;
 
 
     public List<String> getRoleList(){
@@ -83,7 +73,7 @@ public class User {
 
 
     @Builder
-    public User(String email,String password, String username, String address, int age, String nickname, String phoneNumber,String postCode ,String roles,Timestamp createDate, Timestamp modifieddate, String status) {
+    public User(String email,String password, String username, String address, int age, String nickname, String phoneNumber,String postCode ,String roles, String status) {
         this.email = email;
         this.password = password;
         this.username = username;
@@ -93,8 +83,7 @@ public class User {
         this.phoneNumber = phoneNumber;
         this.postCode = postCode;
         this.roles = roles;
-        this.createDate = createDate;
-        this.modifieddate = modifieddate;
         this.status = status;
+        this.passwordEnable = true;
     }
 }

@@ -3,37 +3,24 @@ package com.project.shopping.controller;
 
 import com.project.shopping.Error.CustomException;
 import com.project.shopping.Error.ErrorCode;
-import com.project.shopping.auth.PrincipalDetails;
-import com.project.shopping.dto.ReviewDTO;
 import com.project.shopping.dto.requestDTO.RevieRequestDTO.ReviewCreateRequestDTO;
 import com.project.shopping.dto.requestDTO.RevieRequestDTO.ReviewUpdateRequestDTO;
 import com.project.shopping.dto.responseDTO.ReviewResponseDTO.*;
-import com.project.shopping.model.Product;
-import com.project.shopping.model.Review;
-import com.project.shopping.model.User;
 import com.project.shopping.service.ProductService;
 import com.project.shopping.service.ReviewService;
 import com.project.shopping.service.UserService;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.sql.Timestamp;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.*;
 
 @RestController
 @RequiredArgsConstructor
 public class ReviewController {
-
-    private final ProductService productService;
-
-    private final UserService userService;
 
 
     private final ReviewService reviewService;
@@ -122,7 +109,6 @@ public class ReviewController {
 
         ReviewUpdateResponseDTO reviewUpdateResponseDTO = reviewService.update(authentication, reviewId, reviewUpdateRequestDTO);
 
-
         Map<String, Object> result = new HashMap<>();
         result.put("msg","리뷰수정에 성공했습니다.");
         result.put("data", reviewUpdateResponseDTO);
@@ -130,9 +116,5 @@ public class ReviewController {
         return  ResponseEntity.ok().body(result);
 
     }
-
-
-
-
 
 }

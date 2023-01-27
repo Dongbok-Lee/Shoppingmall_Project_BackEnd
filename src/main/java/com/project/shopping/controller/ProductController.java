@@ -54,7 +54,7 @@ public class ProductController {
 
 
     @DeleteMapping("/api/product/delete/{id}")
-    public ResponseEntity<?>  productdelete(Authentication authentication, @PathVariable(value = "id") int ProductId){
+    public ResponseEntity<?>  productDelete(Authentication authentication, @PathVariable(value = "id") int ProductId){
 
         if(authentication == null){
             throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
@@ -76,7 +76,7 @@ public class ProductController {
 
 
     @GetMapping("/api/products")
-    public ResponseEntity<?> findall(){
+    public ResponseEntity<?> findAll(){
         List<ProductJoinResponseDTO> products = productService.getActiveProdcutList(ActiveStatus);
 
         Map<String , Object> result = new HashMap<>();
@@ -85,8 +85,9 @@ public class ProductController {
         return ResponseEntity.ok().body(result);
 
     }
+
     @PostMapping("/api/product/search")
-    public ResponseEntity<?> searchProudct(@RequestBody @Valid ProductSearchRequestDTO productSearchRequestDTO){
+    public ResponseEntity<?> searchProduct(@RequestBody @Valid ProductSearchRequestDTO productSearchRequestDTO){
         List<ProductSearchResponseDTO> response = productService.getProductList(productSearchRequestDTO.getKeyword(), ActiveStatus);
         Map<String , Object> result = new HashMap<>();
         result.put("msg","상품검색에 성공했습니다.");
@@ -97,7 +98,7 @@ public class ProductController {
 
     // 내가 올린 상품 검색
     @GetMapping("/api/products/user")
-    public ResponseEntity<?> findresisterproductuser(Authentication authentication){
+    public ResponseEntity<?> findResistedProductByUser(Authentication authentication){
         if(authentication == null){
             throw  new CustomException("허용되지 않은 접근입니다." , ErrorCode.UnauthorizedException);
         }
@@ -113,7 +114,7 @@ public class ProductController {
     }
 
     @GetMapping("/api/product/{id}")
-    public ResponseEntity<?>  productfind(@PathVariable(value = "id") int ProductId){
+    public ResponseEntity<?>  productFind(@PathVariable(value = "id") int ProductId){
         //service
         ProductJoinResponseDTO productJoinResponseDTO = productService.findById(ProductId);
 
@@ -152,8 +153,5 @@ public class ProductController {
 
         return ResponseEntity.ok().body(result);
     }
-
-
-
 
 }

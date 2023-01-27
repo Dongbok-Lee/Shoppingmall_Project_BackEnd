@@ -88,13 +88,6 @@ public class OrderService {
         return orderRepository.save(order);
     }
 
-/*    public Order findById(int id){
-        Order order = orderRepository.findById(id)
-            .orElseThrow(()->new
-                    IllegalArgumentException("order Not Found."));
-        return order;
-    }*/
-
     public List<OrderResponseDTO> getOrderList(String email){
 
         User user = userRepository.findByEmail(email)
