@@ -40,8 +40,13 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '2.5.2'
 
+    //redis
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     implementation 'io.springfox:springfox-boot-starter:3.0.0'
+
+
+
 
 
     //querydsl 추가

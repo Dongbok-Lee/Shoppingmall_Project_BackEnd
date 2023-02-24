@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     private Oauth2SuccessHandler successHandler;
 
 
+    
 
     @Autowired
     private CustomOAuth2UserService oAuth2UserService;
@@ -74,10 +75,11 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/api/join/email-check/*").permitAll()
                 .antMatchers("/api/join/nickname-check/*").permitAll()
                 .antMatchers("/api/products").permitAll()
-                .antMatchers("/api/products").permitAll()
+                .antMatchers("/api/reissuance/refreshToken").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .exceptionHandling().authenticationEntryPoint(new CustomAuthenticationEntryPoint());
+
 
         http.addFilterBefore(new JwtAuthorizationFilter(tokenprovider, userRepository), UsernamePasswordAuthenticationFilter.class);
         http.addFilterBefore(new JwtAuthenticationFilter(authenticationManager(),tokenprovider), UsernamePasswordAuthenticationFilter.class);
@@ -129,8 +131,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return null;
     }
 
-
-
-
-
 }
+
